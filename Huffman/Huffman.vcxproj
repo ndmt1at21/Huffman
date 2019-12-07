@@ -126,12 +126,14 @@
     <ClCompile Include="BitIOStream.cpp" />
     <ClCompile Include="CodeTree.cpp" />
     <ClCompile Include="Endian.cpp" />
+    <ClCompile Include="FrequencyTable.cpp" />
     <ClCompile Include="Node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitIOStream.h" />
     <ClInclude Include="CodeTree.h" />
     <ClInclude Include="Endian.h" />
+    <ClInclude Include="FrequencyTable.h" />
     <ClInclude Include="Node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
