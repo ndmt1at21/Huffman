@@ -27,5 +27,4 @@ public:
 	CodeTree buildHuffTree();
 };
 
-NodeWithFreq findMin(std::priority_queue<NodeWithFreq> q1, std::priority_queue<NodeWithFreq> q2);
-NodeWithFreq popQueue(std::priority_queue<NodeWithFreq> q);
+NodeWithFreq popQueue(std::priority_queue<NodeWithFreq>& q);

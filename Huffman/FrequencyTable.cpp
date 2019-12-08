@@ -1,7 +1,5 @@
 ﻿#include "FrequencyTable.h"
 
-#include "FrequencyTable.h"
-
 FrequencyTable::FrequencyTable()
 {
 	_freqs = std::vector<uint32_t>(NUMBER_CHARACTER);
@@ -30,44 +28,29 @@ CodeTree FrequencyTable::buildHuffTree()
 	for (size_t i = 0; i < _freqs.size(); i++)
 		priQueue.push(NodeWithFreq(new Leaf(i), i, _freqs[i]));
 
-
-	
-}
-
-//các hàm hỗ trợ nhẹ =))
-//tim kiếm node nhỏ nhất giữa 2 queue
-NodeWithFreq findMin(std::queue<NodeWithFreq> q1, std::queue<NodeWithFreq> q2)
-{
-	NodeWithFreq min;
-
-	if (q1.empty())
-		min = popQueue(q2);
-
-	if (q2.empty())
-		min = popQueue(q1);
-
-	//nếu cả 2 queue đều có phần tử
-	NodeWithFreq front1(q1.front());
-	NodeWithFreq front2(q2.front());
-
-	//lấy ký tự có tần suất bé hơn
-	if (front1._freq < front2._freq)
-		min = popQueue(q1);
-	else if (front1._freq > front2._freq)
-		min = popQueue(q2);
-	//nếu 2 ký tự có cùng tần suất thì ưu tiên ký tự có mã bé hơn
-	else
+	//tạo cây
+	while (priQueue.size() > 1)
 	{
-		if (front1._symbol < front2._symbol)
-			min = popQueue(q1);
-		else
-			min = popQueue(q2);
+		NodeWithFreq left = popQueue(priQueue); //be nhat ben trai
+		NodeWithFreq right = popQueue(priQueue);
+
+		//push lại node inter vừa mới tạo vào priQueue
+		priQueue.push(NodeWithFreq(new Internal(std::move(left._node), std::move(right._node)),
+			std::min(left._symbol, right._symbol), left._freq + right._freq));
 	}
 
-	return min;
+	//đến bước này thì trong queue phải còn 1 phần tử duy nhất
+	//đó là node cha (root), là internal node
+	if (priQueue.size() != 1)
+		throw std::logic_error("ton tai tren mot node root");
+
+	NodeWithFreq nodeRoot = popQueue(priQueue);
+	CodeTree codeTree(std::move(nodeRoot._node));
+
+	return codeTree;
 }
 
-NodeWithFreq popQueue(std::priority_queue<NodeWithFreq> q)
+NodeWithFreq popQueue(std::priority_queue<NodeWithFreq>& q)
 {
 	if (q.empty())
 		throw std::logic_error("pop queue rong");
