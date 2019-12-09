@@ -5,9 +5,9 @@ FrequencyTable::FrequencyTable()
 	_freqs = std::vector<uint32_t>(NUMBER_CHARACTER);
 }
 
-FrequencyTable::FrequencyTable(const FrequencyTable& freqs)
+FrequencyTable::FrequencyTable(std::vector<uint32_t> freqs)
 {
-	_freqs = freqs._freqs;
+	_freqs = freqs;
 }
 
 void FrequencyTable::increase(uint32_t symbol)
@@ -18,7 +18,7 @@ void FrequencyTable::increase(uint32_t symbol)
 	_freqs[symbol]++;
 }
 
-CodeTree FrequencyTable::buildHuffTree()
+CodeTree FrequencyTable::buildHuffTree() const 
 {
 	//sử dụng min heap hay sử dụng priority_queue để tạo cây Huffman
 	//tham khảo: https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/
@@ -45,7 +45,8 @@ CodeTree FrequencyTable::buildHuffTree()
 		throw std::logic_error("ton tai tren mot node root");
 
 	NodeWithFreq nodeRoot = popQueue(priQueue);
-	CodeTree codeTree(std::move(nodeRoot._node));
+	Internal* root = dynamic_cast<Internal*>(nodeRoot._node.release());
+	CodeTree codeTree(std::move(*root));
 
 	return codeTree;
 }

@@ -13,18 +13,18 @@
 
 class FrequencyTable
 {
-private:
+public:
 	std::vector<uint32_t> _freqs;
 
 public:
 	FrequencyTable();
-	FrequencyTable(const FrequencyTable&);
+	FrequencyTable(std::vector<uint32_t> freqs);
 
 	//tăng tần số xuất hiện của một kí tự symbol
 	void increase(uint32_t symbol);
 
 	//trả về một cây Huffman xây dựng từ bảng thống kê
-	CodeTree buildHuffTree();
+	CodeTree buildHuffTree() const;
 };
 
 NodeWithFreq popQueue(std::priority_queue<NodeWithFreq>& q);

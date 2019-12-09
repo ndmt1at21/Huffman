@@ -1,6 +1,8 @@
 ﻿#include "HuffmanCoder.h"
+#include <memory>
 
-HuffEncoder::HuffEncoder(BitOutputStream& out, CodeTree& codeTree) : _out(out), _codeTree(codeTree) {}
+HuffEncoder::HuffEncoder(BitOutputStream& out, CodeTree& codeTree) 
+	: _out(out), _codeTree(codeTree) {}
 
 HuffEncoder::~HuffEncoder() {}
 
@@ -10,14 +12,36 @@ void HuffEncoder::symEnc(uint32_t symbol)
 		_out.setBit(int(bit));
 }
 
-HuffDecoder::HuffDecoder(BitInputStream& in, CodeTree& codeTree)
-	:_in(in), _codeTree(codeTree) {}
+void HuffEncoder::treeEnc()
+{
+	treeEncRecur(_codeTree.getRoot());
+}
+
+void HuffEncoder::treeEncRecur(const Node* node)
+{
+	if (dynamic_cast<const Leaf*>(node) != NULL)
+	{
+		_out.setBit(1);
+		_out.setByte(dynamic_cast<const Leaf*>(node)->_symbol);
+	}
+	else if (dynamic_cast<const Internal*>(node) != NULL)
+	{
+		const Internal* currentNode = dynamic_cast<const Internal*>(node);
+		
+		_out.setBit(0);
+		treeEncRecur(currentNode->_lchild.get());
+		treeEncRecur(currentNode->_rchild.get());
+	}
+}
+
+HuffDecoder::HuffDecoder(BitInputStream& in)
+	:_in(in) {}
 
 HuffDecoder::~HuffDecoder() {}
 
-int HuffDecoder::symDec()
+int HuffDecoder::symDec(CodeTree& codeTree)
 {
-	const Internal* currentNode = dynamic_cast<Internal*>(_codeTree.getRoot());
+	const Internal* currentNode = codeTree.getRoot();
 
 	while (true)
 	{
@@ -25,7 +49,7 @@ int HuffDecoder::symDec()
 
 		if (tmp == DEF_EOF)
 			break;
-		
+
 		const Node* nextNode;
 
 		//đi qua bên phải
@@ -45,3 +69,29 @@ int HuffDecoder::symDec()
 			currentNode = dynamic_cast<const Internal*>(nextNode);
 	}
 }
+
+CodeTree HuffDecoder::toCodeTree()
+{
+	Internal* root = dynamic_cast<Internal*>(treeDec());
+	CodeTree codeTree(std::move(*root));
+	delete root;
+
+	return codeTree;
+}
+
+Node* HuffDecoder::treeDec()
+{
+	int bit = _in.getBit();
+
+	if (bit == 0)
+	{
+		Node* lchild = treeDec();
+		Node* rchild = treeDec();
+		return (new Internal(std::make_unique<Node>(lchild), std::make_unique<Node>(rchild)));
+	}
+	else if (bit == 1)
+	{
+		return (new Leaf(_in.getByte()));
+	}
+}
+

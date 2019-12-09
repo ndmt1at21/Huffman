@@ -125,15 +125,24 @@
   <ItemGroup>
     <ClCompile Include="BitIOStream.cpp" />
     <ClCompile Include="CodeTree.cpp" />
+    <ClCompile Include="Directory.cpp" />
     <ClCompile Include="Endian.cpp" />
     <ClCompile Include="FrequencyTable.cpp" />
+    <ClCompile Include="HuffmanCoder.cpp" />
+    <ClCompile Include="HuffmanCompress.cpp" />
+    <ClCompile Include="HuffmanDecompress.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitIOStream.h" />
     <ClInclude Include="CodeTree.h" />
+    <ClInclude Include="Directory.h" />
     <ClInclude Include="Endian.h" />
     <ClInclude Include="FrequencyTable.h" />
+    <ClInclude Include="HuffmanCoder.h" />
+    <ClInclude Include="HuffmanCompress.h" />
+    <ClInclude Include="HuffmanDecompress.h" />
     <ClInclude Include="Node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

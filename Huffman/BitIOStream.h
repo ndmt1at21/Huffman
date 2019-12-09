@@ -37,7 +37,7 @@ public:
 	//trả về bit hiện tại trong currentByte
 	int getBit();
 
-	int getChar();
+	int getByte();
 };
 
 
@@ -67,7 +67,7 @@ public:
 	void setBit(int state);
 
 	//ghi kí tự bình thường vào file
-	void charToStream(uint32_t symbol);
+	void setByte(uint32_t symbol);
 
 	//đến cuối file mà byte vẫn chưa điền bit đủ 8 -> thêm 0 vào sau
 	//cho đủ 8 bit -> trọn 1 byte rồi ghi vào file

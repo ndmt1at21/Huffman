@@ -23,6 +23,9 @@ int BitInputStream::getBit()
 		_currentByte = _inFile.get();
 
 		if (_currentByte == EOF)
+			return EOF;
+
+		if (_currentByte == DEF_EOF)
 			return DEF_EOF;
 
 		//kí tự nằm trong bảng ASCII
@@ -37,7 +40,7 @@ int BitInputStream::getBit()
 	return (_currentByte >> _numBitsRemaining) & 1;
 }
 
-int BitInputStream::getChar()
+int BitInputStream::getByte()
 {
 	int sym = 0;
 	for (int i = 0; i < 8; i++)
@@ -88,7 +91,7 @@ void BitOutputStream::setBit(int state)
 	}
 }
 
-void BitOutputStream::charToStream(uint32_t symbol)
+void BitOutputStream::setByte(uint32_t symbol)
 {
 	for (int i = 7; i >= 0; i--)
 		setBit((symbol >> i) & 1);
