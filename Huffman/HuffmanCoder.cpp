@@ -47,6 +47,9 @@ int HuffDecoder::symDec(CodeTree& codeTree)
 	{
 		int tmp = _in.getBit();
 
+		if (tmp == EOF)
+			return EOF;
+
 		if (tmp == DEF_EOF)
 			break;
 
@@ -87,11 +90,13 @@ Node* HuffDecoder::treeDec()
 	{
 		Node* lchild = treeDec();
 		Node* rchild = treeDec();
-		return (new Internal(std::make_unique<Node>(lchild), std::make_unique<Node>(rchild)));
+		return (new Internal(lchild, rchild));
 	}
 	else if (bit == 1)
 	{
 		return (new Leaf(_in.getByte()));
 	}
+
+	return NULL;
 }
 

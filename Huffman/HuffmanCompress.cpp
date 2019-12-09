@@ -14,10 +14,9 @@ HuffmanCompress::~HuffmanCompress()
 	_outFile.close();
 }
 
-int HuffmanCompress::compressFile(std::string infile)
+int HuffmanCompress::compressFile(std::string shortLink)
 {
-	std::ifstream inFile(infile);
-
+	std::ifstream inFile(_dirIn + shortLink);
 	if (inFile.fail())
 		return 0;
 
@@ -41,8 +40,8 @@ int HuffmanCompress::compressFile(std::string infile)
 	
 	//đọc lại file để encode
 	//ghi linkFile vao outFile
-	name.push_back('\n');
-	outFile << name;
+	shortLink.push_back('\n');
+	_outFile << shortLink;
 
 	//encode cây huffman
 	encode.treeEnc();
@@ -62,9 +61,11 @@ int HuffmanCompress::compressFile(std::string infile)
 	}
 	encode.symEnc(256);
 	bOut.alignByte();
+
+	return 1;
 }
 
-int HuffmanCompress::compressFiles()
-{
-	
-}
+//int HuffmanCompress::compress()
+//{
+//	
+//}

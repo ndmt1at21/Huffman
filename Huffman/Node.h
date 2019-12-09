@@ -27,6 +27,7 @@ public:
 	std::unique_ptr<Node> _rchild; //khac NULL
 
 	Internal(std::unique_ptr<Node>&& lchild, std::unique_ptr<Node>&& rchild);
+	Internal(Node* lchild, Node* rchild);
 };
 
 

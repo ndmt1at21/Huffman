@@ -16,7 +16,7 @@ public:
 	~HuffmanCompress();
 
 	//1 thành công, 0 không thành công
-	int compressFile(std::string infile);
-	int compressFiles();
+	int compressFile(std::string shortLink);
+	int compress();
 };
 

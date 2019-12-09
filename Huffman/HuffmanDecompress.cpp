@@ -11,18 +11,21 @@ HuffmanDecompress::HuffmanDecompress(std::string linkInFile, std::string dirOut)
 	_dirOut = dirOut;
 }
 
-int HuffmanDecompress::decompressFile(std::string outFolder)
+int HuffmanDecompress::decompressFile()
 {
 	//đọc file đã được encode
 	BitInputStream bIn(_inFile);
 	
 	//đọc header (link file doi voi folder, hoặc tên file)
-	std::string name;
-	std::getline(_inFile, name, '\n');
-	std::string linkFileOut = outFolder + name;
+	std::string shortLink;
+	std::getline(_inFile, shortLink, '\n');
+	std::string linkFileOut = _dirOut + shortLink;
 
 	//xây dựng lại cây huffman
 	std::ofstream outFile(linkFileOut, std::ios::binary);
+	if (outFile.fail())
+		return 0;
+
 	HuffDecoder decode(bIn);
 	CodeTree codeTree = decode.toCodeTree();
 	
@@ -30,6 +33,9 @@ int HuffmanDecompress::decompressFile(std::string outFolder)
 	while (true)
 	{
 		int symbol = decode.symDec(codeTree);
+
+		if (symbol == EOF)
+			return EOF;
 
 		if (symbol == DEF_EOF)
 			break;
@@ -41,9 +47,11 @@ int HuffmanDecompress::decompressFile(std::string outFolder)
 			symbol -= (symbol >> 7) << 8;
 		outFile.put(char(symbol));
 	}
+
+	return 1;
 }
 
-int HuffmanDecompress::decompressFiles()
-{
-
-}
+//int HuffmanDecompress::decompress()
+//{
+//
+//}

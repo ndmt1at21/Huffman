@@ -9,6 +9,8 @@ Leaf::Leaf(uint32_t symbol) {}
 Internal::Internal(std::unique_ptr<Node>&& lchild, std::unique_ptr<Node>&& rchild)
 	: _lchild(std::move(lchild)), _rchild(std::move(rchild)) {}
 
+Internal::Internal(Node* lchild, Node* rchild)
+	: _lchild(std::unique_ptr<Node>(lchild)), _rchild(std::unique_ptr<Node>(rchild)) {}
 
 NodeWithFreq::NodeWithFreq()
 	: _symbol(0), _freq(0) {}

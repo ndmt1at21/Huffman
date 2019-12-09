@@ -14,7 +14,7 @@ public:
 	HuffmanDecompress();
 	HuffmanDecompress(std::string linkInFile, std::string dirOut);
 
-	int decompressFile(std::string outFolder);
-	int decompressFiles();
+	int decompressFile();
+	int decompress();
 };
 
