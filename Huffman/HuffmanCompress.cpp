@@ -16,7 +16,7 @@ HuffmanCompress::~HuffmanCompress()
 
 int HuffmanCompress::compressFile(std::string shortLink)
 {
-	std::ifstream inFile(_dirIn + shortLink);
+	std::ifstream inFile(_dirIn + shortLink, std::ios::binary);
 	if (inFile.fail())
 		return 0;
 
@@ -30,21 +30,32 @@ int HuffmanCompress::compressFile(std::string shortLink)
 
 		freqTab.increase(sym);
 	}
-
+	freqTab.increase(DEF_EOF);
+	CodeTree codeTree = freqTab.buildHuffTree();
+	
 	//trở lại đầu file
+	inFile.clear();
 	inFile.seekg(0);
 
-	BitOutputStream bOut(_outFile);
-	CodeTree codeTree = freqTab.buildHuffTree();
-	HuffEncoder encode(bOut, codeTree);
-	
 	//đọc lại file để encode
 	//ghi linkFile vao outFile
+	if (shortLink == "") //chỉ có 1 file đầu vào
+		shortLink = Directory::getFileName(_dirIn);
 	shortLink.push_back('\n');
 	_outFile << shortLink;
 
-	//encode cây huffman
-	encode.treeEnc();
+	BitOutputStream bOut(_outFile);
+
+	std::vector<uint32_t> codeLens = codeTree.getCodeLens();
+	CanonicalCode canno(codeLens);
+	codeTree = canno.toCodeTree();
+	
+	//chứa các hàm hỗ trợ 
+	HuffEncoder encode(bOut, codeTree);
+
+	//ghi bảng codelen vào file
+	for (size_t i = 0; i < NUMBER_CHARACTER; i++)
+		bOut.setByte(codeLens[i]);
 
 	//encode nội dung
 	while (true)
@@ -56,16 +67,23 @@ int HuffmanCompress::compressFile(std::string shortLink)
 		if (symbol < 0 || symbol > 255)
 			throw std::logic_error("Ky tu khong ho tro");
 
-		//ký tự luôn không âm nên vẫn cast đc
 		encode.symEnc(static_cast<uint32_t>(symbol));
 	}
 	encode.symEnc(256);
 	bOut.alignByte();
+	inFile.close();
 
 	return 1;
 }
 
-//int HuffmanCompress::compress()
-//{
-//	
-//}
+bool HuffmanCompress::compress()
+{
+	std::vector<std::string> shortLinkFiles = Directory::getLinkFiles(_dirIn);
+	for (size_t i = 0; i < shortLinkFiles.size(); i++)
+	{
+		if (compressFile(shortLinkFiles[i]) == 0) //fail
+			return 0;
+	}
+
+	return 1;
+}

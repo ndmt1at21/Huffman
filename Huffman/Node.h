@@ -36,14 +36,14 @@ class NodeWithFreq
 public:
 	std::unique_ptr<Node> _node;
 	uint32_t _symbol;
-	uint32_t _freq;
+	uint64_t _freq;
 
 public:
 	NodeWithFreq();
 
 	//khởi tạo smart pointer _node bằng một con trỏ bình thường
 	//con trỏ này vẫn giữ nguyên (nếu nó được 1 biến quản lý)
-	NodeWithFreq(Node* node, uint32_t symbol, uint32_t freq);
+	NodeWithFreq(Node* node, uint32_t symbol, uint64_t freq);
 
 	//cố tính làm ngược lại để áp dụng cho priority queue
 	//vì pri queue dùng toán tử để xem nào lớn nhất ra trước

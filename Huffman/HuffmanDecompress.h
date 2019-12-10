@@ -3,6 +3,8 @@
 #include "CodeTree.h"
 #include "HuffmanCoder.h"
 #include <fstream>
+#include "Directory.h"
+#include "CanonicalCode.h"
 
 class HuffmanDecompress
 {
@@ -15,6 +17,6 @@ public:
 	HuffmanDecompress(std::string linkInFile, std::string dirOut);
 
 	int decompressFile();
-	int decompress();
+	bool decompress();
 };
 

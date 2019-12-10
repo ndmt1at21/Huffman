@@ -7,7 +7,7 @@ CodeTree::CodeTree(Internal&& root) :_root(std::move(root))//?? tai sao de vao s
 	//chứa code của 1 ký tự từ 0-255 (256 quy định EOF)
 	_codes = std::vector<std::vector<char>>(NUMBER_CHARACTER, std::vector<char>());
 	std::vector<char> codePrefix;
-	buildListCode(&root, codePrefix);
+	buildListCode(&_root, codePrefix);
 }
 
 void CodeTree::buildListCode(const Node* node, std::vector<char>& codePrefix)
@@ -32,7 +32,7 @@ void CodeTree::buildListCode(const Node* node, std::vector<char>& codePrefix)
 		const Leaf* leaf = dynamic_cast<const Leaf*>(node);
 
 		//kí tự truyền vào không hợp lệ
-		if (leaf->_symbol < 0 || leaf->_symbol > 255)
+		if (leaf->_symbol >= _codes.size())
 			throw std::logic_error("Ky tu khong duoc ho tro");
 
 		//symbol đã có mã code điền vào rồi, điền lại ko hợp lại
@@ -56,4 +56,12 @@ const std::vector<char>& CodeTree::getCode(uint32_t symbol)
 		throw std::logic_error("Ky tu khong co ma code");
 
 	return _codes[symbol];
+}
+
+std::vector<uint32_t> CodeTree::getCodeLens()
+{
+	std::vector<uint32_t> lens;
+	for (size_t i = 0; i < _codes.size(); i++)
+		lens.push_back(_codes[i].size());
+	return lens;
 }

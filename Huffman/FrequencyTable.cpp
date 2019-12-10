@@ -15,6 +15,8 @@ void FrequencyTable::increase(uint32_t symbol)
 	if (symbol < 0 || symbol > NUMBER_CHARACTER)
 		throw std::logic_error("Ki tu khong duoc ho tro");
 
+	if (_freqs[symbol] >= UINT32_MAX)
+		throw std::logic_error("Kich thuoc file vuot gioi han ho tro");
 	_freqs[symbol]++;
 }
 
@@ -26,7 +28,8 @@ CodeTree FrequencyTable::buildHuffTree() const
 
 	//tạo các node lá (các ký tự có tần suất > 0)
 	for (size_t i = 0; i < _freqs.size(); i++)
-		priQueue.push(NodeWithFreq(new Leaf(i), i, _freqs[i]));
+		if (_freqs[i] > 0)
+			priQueue.push(NodeWithFreq(new Leaf(i), i, _freqs[i]));
 
 	//tạo cây
 	while (priQueue.size() > 1)
@@ -36,7 +39,7 @@ CodeTree FrequencyTable::buildHuffTree() const
 
 		//push lại node inter vừa mới tạo vào priQueue
 		priQueue.push(NodeWithFreq(new Internal(std::move(left._node), std::move(right._node)),
-			std::min(left._symbol, right._symbol), left._freq + right._freq));
+			std::min(left._symbol, right._symbol), uint64_t(left._freq + right._freq)));
 	}
 
 	//đến bước này thì trong queue phải còn 1 phần tử duy nhất

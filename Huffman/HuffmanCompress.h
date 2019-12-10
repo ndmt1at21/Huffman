@@ -2,8 +2,10 @@
 #include "HuffmanCoder.h"
 #include "CodeTree.h"
 #include "FrequencyTable.h"
+#include "Directory.h"
 #include <fstream>
 #include <string>
+#include "CanonicalCode.h"
 
 class HuffmanCompress
 {
@@ -17,6 +19,6 @@ public:
 
 	//1 thành công, 0 không thành công
 	int compressFile(std::string shortLink);
-	int compress();
+	bool compress();
 };
 

@@ -31,5 +31,8 @@ public:
 
 	//trả về mã code của 1 kí tự
 	const std::vector<char>& getCode(uint32_t symbol);
+
+	//
+	std::vector<uint32_t> getCodeLens();
 };
 

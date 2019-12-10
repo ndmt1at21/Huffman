@@ -11,9 +11,9 @@
 class Directory
 {
 public:
-	//trả về đường dẫn rút gọn
-	//VD: linkDir: D:/C++/Huffman (trong thu muc co file abc.txt)
-	//-> result: /Huffman/abc.txt (ko cần có ổ đĩa)
+	//trả về đường dẫn của tất cả các file trong folder
+	//nếu là file thì trả về đường dẫn file đó
+	//trả về link rút gọn
 	static std::vector<std::string> getLinkFiles(std::string linkDir); //folder or file
 	static std::string getFileName(std::string linkFile);
 	

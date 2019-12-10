@@ -5,8 +5,7 @@
 std::vector<std::string> Directory::getLinkFiles(std::string linkDir)
 {
 	//tách folder cuối làm current link
-	size_t last_folder = linkDir.find_last_of('/');
-	std::string currentLink(linkDir, last_folder, std::string::npos);
+	std::string currentLink;
 	std::vector<std::string> linkFiles;
 	
 	list(linkDir.c_str(), currentLink, linkFiles);
@@ -26,7 +25,7 @@ void Directory::list(const char* dir, std::string currentLink, std::vector<std::
 	std::ifstream isFile(dir);
 	if (!isFile.fail())
 	{
-		linkFiles.push_back(currentLink);
+		linkFiles.push_back("");
 		return;
 	}
 

@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BitIOStream.cpp" />
+    <ClCompile Include="CanonicalCode.cpp" />
     <ClCompile Include="CodeTree.cpp" />
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="Endian.cpp" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitIOStream.h" />
+    <ClInclude Include="CanonicalCode.h" />
     <ClInclude Include="CodeTree.h" />
     <ClInclude Include="Directory.h" />
     <ClInclude Include="Endian.h" />

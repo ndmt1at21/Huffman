@@ -4,11 +4,17 @@
 #include "Endian.h"
 #include "FrequencyTable.h"
 #include "Directory.h"
+#include "HuffmanCompress.h"
+#include "HuffmanDecompress.h"
 #include <fstream>
 
 using namespace std;
 
 int main()
 {
-	Directory::makeDir("D:/C++/testCC/hihi/huff/hrf/dfjkf/a.txt");
+	//HuffmanCompress zip("D:/C++/test/test.txt", "D:/C++/test/test.jav");
+	//zip.compress();
+
+	HuffmanDecompress dezip("D:/C++/test/test.jav", "D:/C++/test/a");
+	dezip.decompress();
 }

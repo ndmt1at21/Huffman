@@ -68,11 +68,8 @@ void BitOutputStream::setBit(int state)
 		return;
 
 	//ex: currentByte = 2 (010) -> 001 << 1 | 1 -> (100 | 001) = 101
-	if (_numBitsFilled < 8)
-	{
-		_currentByte = (_currentByte << 1) | state;
-		_numBitsFilled++;
-	}
+	_currentByte = (_currentByte << 1) | state;
+	_numBitsFilled++;
 
 	if (_numBitsFilled == 8)
 	{

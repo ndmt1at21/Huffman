@@ -18,13 +18,13 @@ public:
 	HuffEncoder(BitOutputStream& out, CodeTree& codeTree);
 	~HuffEncoder();
 	void symEnc(uint32_t symbol);
-
-	//encode tree huffman ghi vào file
-	void treeEnc();
-
-private:
-	//hàm đệ quy hỗ trợ encode tree
-	void treeEncRecur(const Node* node);
+//
+//	//encode tree huffman ghi vào file
+//	void treeEnc();
+//
+//private:
+//	//hàm đệ quy hỗ trợ encode tree
+//	void treeEncRecur(const Node* node);
 };
 
 class HuffDecoder
@@ -39,11 +39,11 @@ public:
 	//decode 1 ký tự
 	int symDec(CodeTree& codeTree);
 
-	//xây dựng lại cây huffman từ file đã được encode
-	CodeTree toCodeTree();
-
-private:
-	//hàm đệ quy, hỗ trợ xây dựng lại huff tree
-	Node* treeDec();
+//	//xây dựng lại cây huffman từ file đã được encode
+//	CodeTree toCodeTree();
+//
+//private:
+//	//hàm đệ quy, hỗ trợ xây dựng lại huff tree
+//	Node* treeDec();
 };
 
