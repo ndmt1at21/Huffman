@@ -12,28 +12,6 @@ void HuffEncoder::symEnc(uint32_t symbol)
 		_out.setBit(int(bit));
 }
 
-//void HuffEncoder::treeEnc()
-//{
-//	treeEncRecur(_codeTree.getRoot());
-//}
-//
-//void HuffEncoder::treeEncRecur(const Node* node)
-//{
-//	if (dynamic_cast<const Leaf*>(node) != NULL)
-//	{
-//		_out.setBit(1);
-//		_out.setByte(dynamic_cast<const Leaf*>(node)->_symbol);
-//	}
-//	else if (dynamic_cast<const Internal*>(node) != NULL)
-//	{
-//		const Internal* currentNode = dynamic_cast<const Internal*>(node);
-//		
-//		_out.setBit(0);
-//		treeEncRecur(currentNode->_lchild.get());
-//		treeEncRecur(currentNode->_rchild.get());
-//	}
-//}
-
 HuffDecoder::HuffDecoder(BitInputStream& in)
 	:_in(in) {}
 
@@ -48,10 +26,7 @@ int HuffDecoder::symDec(CodeTree& codeTree)
 		int tmp = _in.getBit();
 
 		if (tmp == EOF)
-			return EOF;
-
-		if (tmp == DEF_EOF)
-			break;
+			return EOF;//?
 
 		const Node* nextNode;
 
@@ -72,31 +47,3 @@ int HuffDecoder::symDec(CodeTree& codeTree)
 			currentNode = dynamic_cast<const Internal*>(nextNode);
 	}
 }
-//
-//CodeTree HuffDecoder::toCodeTree()
-//{
-//	Internal* root = dynamic_cast<Internal*>(treeDec());
-//	CodeTree codeTree(std::move(*root));
-//	delete root;
-//
-//	return codeTree;
-//}
-//
-//Node* HuffDecoder::treeDec()
-//{
-//	int bit = _in.getBit();
-//
-//	if (bit == 0)
-//	{
-//		Node* lchild = treeDec();
-//		Node* rchild = treeDec();
-//		return (new Internal(lchild, rchild));
-//	}
-//	else if (bit == 1)
-//	{
-//		return (new Leaf(_in.getByte()));
-//	}
-//
-//	return NULL;
-//}
-//

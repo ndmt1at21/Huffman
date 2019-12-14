@@ -76,7 +76,7 @@ void Directory::makeDir(std::string linkFile)
 		//ex: D:/C++/Huffman/a.txt -> C++ trước -> Huffman -> dừng
 		_mkdir(currentLink.c_str());
 
-		if (next_slash == last_slash)
-			return;
+		if (next_slash > last_slash)
+			break;
 	}
 }

@@ -7,14 +7,29 @@
 #include "HuffmanCompress.h"
 #include "HuffmanDecompress.h"
 #include <fstream>
+#include "FastFstream.h"
+#include <time.h>
+#include <ctime>
+
 
 using namespace std;
 
 int main()
 {
-	//HuffmanCompress zip("D:/C++/test/test.txt", "D:/C++/test/test.jav");
-	//zip.compress();
+	int a;
+	cin >> a;
 
-	HuffmanDecompress dezip("D:/C++/test/test.jav", "D:/C++/test/a");
-	dezip.decompress();
+	clock_t start = clock();
+	if (a == 0)
+	{
+		HuffmanCompress zip("D:/C++/test/corpus-title.txt", "D:/C++/test/test.jav");
+		zip.compress();
+	}
+	else
+	{
+		HuffmanDecompress dezip("D:/C++/test/test.jav", "D:/C++/test/new");
+		dezip.decompress();
+	}
+	clock_t end = clock();
+	cout << "Time: " << double(end - start) / CLOCKS_PER_SEC;
 }

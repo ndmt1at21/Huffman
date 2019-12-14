@@ -61,7 +61,7 @@ const std::vector<char>& CodeTree::getCode(uint32_t symbol)
 std::vector<uint32_t> CodeTree::getCodeLens()
 {
 	std::vector<uint32_t> lens;
-	for (size_t i = 0; i < _codes.size(); i++)
+	for (uint32_t i = 0; i < _codes.size(); i++)
 		lens.push_back(_codes[i].size());
 	return lens;
 }

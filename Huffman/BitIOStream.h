@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Endian.h"
 #include <fstream>
+#include "FastFstream.h"
 
 #define ERROR_IO_BIT -1
 #define DEF_EOF 256
@@ -18,7 +19,7 @@ class BitInputStream
 {
 private:
 	//Con trỏ đến file
-	std::ifstream& _inFile;
+	f_ifstream& _inFile;
 
 	//byte đọc được hiện tại từ file, các kí tự ASCII, nằm trong [0...255]
 	//-1 nếu không đọc được
@@ -32,11 +33,11 @@ private:
 
 public:
 	//phương thức khởi tạo truyền vào stream
-	BitInputStream(std::ifstream& inFile);
+	BitInputStream(f_ifstream& inFile);
+	~BitInputStream();
 
 	//trả về bit hiện tại trong currentByte
 	int getBit();
-
 	int getByte();
 };
 
@@ -45,7 +46,7 @@ class BitOutputStream
 {
 private:
 	//Con trỏ đến file
-	std::ofstream& _outFile;
+	f_ofstream& _outFile;
 
 	//byte đọc được hiện tại từ file, các kí tự ASCII, nằm trong [0...255]
 	//-1 nếu không đọc được
@@ -59,7 +60,8 @@ private:
 
 public:
 	//phương thức khởi tạo truyền vào stream
-	BitOutputStream(std::ofstream& outFile);
+	BitOutputStream(f_ofstream& outFile);
+	~BitOutputStream();
 
 	//set bit tiếp theo trong current byte
 	//state: trạng thái 1 bit (0 hay 1) cần set vào currentByte

@@ -23,7 +23,7 @@ CodeTree CanonicalCode::toCodeTree()
 		if (i > 0)
 		{
 			//duyệt tìm kiếm tất cả các code có cùng lenght (cùng độ cao trong cây huff)
-			for (size_t j = 0; j < _codeLens.size(); j++)
+			for (uint32_t j = 0; j < _codeLens.size(); j++)
 			{
 				//vì 1 mã tương ứng 1 kí tự nên đều là leaf
 				if (i == _codeLens[j])

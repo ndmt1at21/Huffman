@@ -5,16 +5,17 @@
 #include <fstream>
 #include "Directory.h"
 #include "CanonicalCode.h"
+#include "FastFstream.h"
 
 class HuffmanDecompress
 {
 private:
-	std::ifstream _inFile; //file compressed
+	f_ifstream _fileCompressed; //file compressed
 	std::string _dirOut; //link folder where file be decompress
 
 public:
-	HuffmanDecompress();
-	HuffmanDecompress(std::string linkInFile, std::string dirOut);
+	HuffmanDecompress(std::string linkFileDecompress, std::string dirOut);
+	~HuffmanDecompress();
 
 	int decompressFile();
 	bool decompress();

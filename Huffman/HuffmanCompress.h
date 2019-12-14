@@ -6,15 +6,16 @@
 #include <fstream>
 #include <string>
 #include "CanonicalCode.h"
+#include "FastFstream.h"
 
 class HuffmanCompress
 {
 private:
 	std::string _dirIn; //file or folder
-	std::ofstream _outFile; //file compressed
+	f_ofstream _fileCompress; //file compressed
 
 public:
-	HuffmanCompress(std::string dirIn, std::string linkOutFile);
+	HuffmanCompress(std::string dirIn, std::string linkFileCompress);
 	~HuffmanCompress();
 
 	//1 thành công, 0 không thành công

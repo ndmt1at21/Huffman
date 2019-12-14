@@ -1,58 +1,55 @@
 ﻿#include "HuffmanDecompress.h"
 
-HuffmanDecompress::HuffmanDecompress() {}
-
-HuffmanDecompress::HuffmanDecompress(std::string linkInFile, std::string dirOut)
+HuffmanDecompress::HuffmanDecompress(std::string linkFileCompressed, std::string dirOut)
+	:_fileCompressed(linkFileCompressed)
 {
-	_inFile.open(linkInFile, std::ios::binary);
-	if (_inFile.fail())
-		throw std::logic_error("file nen khong ton tai");
-	
 	_dirOut = dirOut;
 }
+
+HuffmanDecompress::~HuffmanDecompress() {}
 
 int HuffmanDecompress::decompressFile()
 {
 	//đọc file đã được encode
-	BitInputStream bIn(_inFile);
+	BitInputStream bIn(_fileCompressed);
 	HuffDecoder decode(bIn);
 
 	//đọc header (link file doi voi folder, hoặc tên file)
-	std::string shortLink;
-	std::getline(_inFile, shortLink, '\n');
+	std::string shortLink = _fileCompressed.getline('\n');
 	std::string linkFileOut = _dirOut + shortLink;
 	Directory::makeDir(linkFileOut); //tạo đường dẫn nếu chưa có
 
-	//xây dựng lại cây huffman
-	std::ofstream outFile(linkFileOut, std::ios::binary);
-	if (outFile.fail())
+	f_ofstream fileDecompress(linkFileOut);
+	if (fileDecompress.fail())
 		return 0;
 
+	//xây dựng lại cây huffman
 	//đọc bảng code len
-	std::vector<uint32_t> codeLens;
+	std::vector<uint32_t> codeLens(NUMBER_CHARACTER);
 	for (size_t i = 0; i < NUMBER_CHARACTER; i++)
-		codeLens.push_back(bIn.getByte());
+		codeLens[i] = bIn.getByte();
 
 	CanonicalCode canno(codeLens);
 	CodeTree codeTree = canno.toCodeTree();
 	
-	//đọc và decode từng ký tự
+	//đọc từng bit và decode từng ký tự
 	while (true)
 	{
 		int symbol = decode.symDec(codeTree);
-
 		if (symbol == EOF)
+		{
+			fileDecompress.write();
 			return EOF;
+		}
 
 		if (symbol == DEF_EOF)
-			break;
+		{
+			fileDecompress.write();
+			return DEF_EOF;
+		}
 
-		//ép từ int 4 byte về 1 byte char
-		//vì từ 0-255 nên ko mất dữ liệu
-		//char từ -127 tới 127 nên cần kiểm tra số trong int chuyển sang char có dấu ko
-		if (std::numeric_limits<char>::is_signed)
-			symbol -= (symbol >> 7) << 8;
-		outFile.put(char(symbol));
+		//symbol 0..255 -> ép kiểu k lỗi logic
+		fileDecompress.write(char(symbol));
 	}
 
 	return 1;
@@ -63,10 +60,8 @@ bool HuffmanDecompress::decompress()
 	while (true)
 	{
 		int tmp = decompressFile();
-		if (tmp == EOF) //het file nen
+		if (tmp == EOF || tmp == 0) //het file nen
 			break;
-		if (tmp == 0) //thất bại
-			return 0;
 	}
 
 	return 1;

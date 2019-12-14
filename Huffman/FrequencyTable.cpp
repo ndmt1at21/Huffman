@@ -27,7 +27,7 @@ CodeTree FrequencyTable::buildHuffTree() const
 	std::priority_queue<NodeWithFreq> priQueue;
 
 	//tạo các node lá (các ký tự có tần suất > 0)
-	for (size_t i = 0; i < _freqs.size(); i++)
+	for (uint32_t i = 0; i < _freqs.size(); i++)
 		if (_freqs[i] > 0)
 			priQueue.push(NodeWithFreq(new Leaf(i), i, _freqs[i]));
 

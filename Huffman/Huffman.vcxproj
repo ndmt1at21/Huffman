@@ -128,6 +128,7 @@
     <ClCompile Include="CodeTree.cpp" />
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="Endian.cpp" />
+    <ClCompile Include="FastFstream.cpp" />
     <ClCompile Include="FrequencyTable.cpp" />
     <ClCompile Include="HuffmanCoder.cpp" />
     <ClCompile Include="HuffmanCompress.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="CodeTree.h" />
     <ClInclude Include="Directory.h" />
     <ClInclude Include="Endian.h" />
+    <ClInclude Include="FastFstream.h" />
     <ClInclude Include="FrequencyTable.h" />
     <ClInclude Include="HuffmanCoder.h" />
     <ClInclude Include="HuffmanCompress.h" />

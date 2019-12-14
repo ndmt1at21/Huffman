@@ -1,24 +1,16 @@
 ﻿#include "HuffmanCompress.h"
 
-HuffmanCompress::HuffmanCompress(std::string dirIn, std::string linkOutFile)
+HuffmanCompress::HuffmanCompress(std::string dirIn, std::string linkFileCompress)
+	:_fileCompress(linkFileCompress)
 {
 	_dirIn = dirIn;
-	_outFile.open(linkOutFile, std::ios::binary);
-
-	if (_outFile.fail())
-		throw std::logic_error("duong dan khong ton tai");
 }
 
-HuffmanCompress::~HuffmanCompress() 
-{
-	_outFile.close();
-}
+HuffmanCompress::~HuffmanCompress() {}
 
 int HuffmanCompress::compressFile(std::string shortLink)
 {
-	std::ifstream inFile(_dirIn + shortLink, std::ios::binary);
-	if (inFile.fail())
-		return 0;
+	f_ifstream inFile(_dirIn + shortLink);
 
 	//đọc 1 lần file để tạo bảng tần suất xuất hiện
 	FrequencyTable freqTab;
@@ -27,51 +19,48 @@ int HuffmanCompress::compressFile(std::string shortLink)
 		int sym = inFile.get();
 		if (sym == EOF)
 			break;
-
 		freqTab.increase(sym);
 	}
-	freqTab.increase(DEF_EOF);
-	CodeTree codeTree = freqTab.buildHuffTree();
+	freqTab.increase(DEF_EOF); //eof định nghĩa
 	
 	//trở lại đầu file
 	inFile.clear();
-	inFile.seekg(0);
+	inFile.seek(0);
 
 	//đọc lại file để encode
-	//ghi linkFile vao outFile
+	//ghi linkFile vào outFile
 	if (shortLink == "") //chỉ có 1 file đầu vào
 		shortLink = Directory::getFileName(_dirIn);
+	else
+		shortLink = Directory::getFileName(_dirIn) + shortLink;
 	shortLink.push_back('\n');
-	_outFile << shortLink;
+	_fileCompress.write(shortLink);
 
-	BitOutputStream bOut(_outFile);
-
+	BitOutputStream bOut(_fileCompress);
+	CodeTree codeTree = freqTab.buildHuffTree();
+	
 	std::vector<uint32_t> codeLens = codeTree.getCodeLens();
 	CanonicalCode canno(codeLens);
 	codeTree = canno.toCodeTree();
-	
-	//chứa các hàm hỗ trợ 
-	HuffEncoder encode(bOut, codeTree);
+	HuffEncoder encode(bOut, codeTree); //chứa các hàm hỗ trợ
 
 	//ghi bảng codelen vào file
 	for (size_t i = 0; i < NUMBER_CHARACTER; i++)
 		bOut.setByte(codeLens[i]);
 
 	//encode nội dung
+	int i = 0;
 	while (true)
 	{
-		int symbol = inFile.get();
-		if (symbol == EOF)
+		//tmp 0..255
+		int sym = inFile.get();
+		if (sym == EOF)
 			break;
-
-		if (symbol < 0 || symbol > 255)
-			throw std::logic_error("Ky tu khong ho tro");
-
-		encode.symEnc(static_cast<uint32_t>(symbol));
+		i++;
+		encode.symEnc(static_cast<uint32_t>(sym));
 	}
 	encode.symEnc(256);
 	bOut.alignByte();
-	inFile.close();
 
 	return 1;
 }
