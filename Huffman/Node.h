@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿/***********************************************************
+* Author: Nguyễn Đức Minh Trí							   *
+* Function: định nghĩa và 1 vài phương thức node, leaf     *
+* Date: 22/11/2019										   *
+***********************************************************/
+
+#pragma once
 #include <iostream>
 #include <memory>
 
@@ -10,7 +16,7 @@ public:
 };
 
 
-//node la chi co du lieu la ky tu
+//node chỉ có dữ liệu là ký tự
 class Leaf :public Node
 {
 public:
@@ -19,7 +25,7 @@ public:
 };
 
 
-//node cha, gom 2 nhanh con
+//node cha, gồm 2 nhánh con
 class Internal :public Node
 {
 public:

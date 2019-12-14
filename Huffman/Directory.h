@@ -21,7 +21,15 @@ public:
 	//chức năng: tạo folder chứa file
 	static void makeDir(std::string linkFile);
 
+	//trả về kích thước của file, đơn bị bytes
+	static uint64_t getFileSize(std::string linkFile);
+
+	//trả về kích thước của folder, đơn vị bytes
+	static uint64_t getFolderSize(std::string linkFolder);
+
 private:
 	static void list(const char* dir, std::string currentLink, std::vector<std::string>& linkFiles);
+
+	
 };
 

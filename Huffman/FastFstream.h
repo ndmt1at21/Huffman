@@ -21,6 +21,9 @@ public:
 	void clear();
 	void seek(std::streamoff off = 0);
 	bool fail();
+
+	//read direct from file
+	void read(char* str, uint32_t count);
 };
 
 
@@ -41,9 +44,12 @@ public:
 	//write char to buffer
 	void write(char ch);
 	
-	//write all in bufffer to file
-	void write();
-
 	//write string to bufffer
 	void write(std::string str);
+
+	//write int to FILE
+	void write(uint32_t a);
+
+	//write all in bufffer to file
+	void write();
 };

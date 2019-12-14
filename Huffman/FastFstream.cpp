@@ -71,6 +71,11 @@ bool f_ifstream::fail()
 	return _inFile.fail();
 }
 
+void f_ifstream::read(char* str, uint32_t count)
+{
+	_inFile.read(str, count);
+}
+
 f_ofstream::f_ofstream(std::string linkFile)
 {
 	_outFile.open(linkFile, std::ios::binary);
@@ -110,4 +115,10 @@ void f_ofstream::write(std::string str)
 bool f_ofstream::fail()
 {
 	return _outFile.fail();
+}
+
+void f_ofstream::write(uint32_t a)
+{
+	char* tmp = (char*)&a;
+	_outFile.write(tmp, 4); 
 }

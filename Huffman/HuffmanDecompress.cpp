@@ -57,6 +57,12 @@ int HuffmanDecompress::decompressFile()
 
 bool HuffmanDecompress::decompress()
 {
+	//read header
+	uint32_t sign;
+	_fileCompressed.read((char*)&sign, 4);
+	if (sign != MAGIC_NUMBER)
+		return 0;
+
 	while (true)
 	{
 		int tmp = decompressFile();

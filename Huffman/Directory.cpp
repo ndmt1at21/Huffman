@@ -80,3 +80,26 @@ void Directory::makeDir(std::string linkFile)
 			break;
 	}
 }
+
+uint64_t Directory::getFileSize(std::string linkFile)
+{
+	std::ifstream inFile(linkFile, std::ios::binary);
+	if (inFile.fail())
+		return 0;
+
+	inFile.seekg(0, std::ios_base::end);
+	std::streampos size = inFile.tellg(); //không đúng hoàn toàn
+	return size;
+}
+
+uint64_t Directory::getFolderSize(std::string linkFolder)
+{
+	std::vector<std::string> linkFiles;
+	linkFiles = getLinkFiles(linkFolder);
+
+	uint64_t size = 0;
+	for (size_t i = 0; i < linkFiles.size(); i++)
+		size += getFileSize(linkFolder + linkFiles[i]);
+	
+	return size;
+}

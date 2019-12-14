@@ -51,6 +51,9 @@
     <ClCompile Include="FastFstream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MyUltility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitIOStream.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FastFstream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyUltility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

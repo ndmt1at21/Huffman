@@ -134,6 +134,7 @@
     <ClCompile Include="HuffmanCompress.cpp" />
     <ClCompile Include="HuffmanDecompress.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyUltility.cpp" />
     <ClCompile Include="Node.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="HuffmanCoder.h" />
     <ClInclude Include="HuffmanCompress.h" />
     <ClInclude Include="HuffmanDecompress.h" />
+    <ClInclude Include="MyUltility.h" />
     <ClInclude Include="Node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

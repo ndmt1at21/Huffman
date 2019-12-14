@@ -11,6 +11,8 @@ HuffmanCompress::~HuffmanCompress() {}
 int HuffmanCompress::compressFile(std::string shortLink)
 {
 	f_ifstream inFile(_dirIn + shortLink);
+	if (inFile.fail())
+		return 0;
 
 	//đọc 1 lần file để tạo bảng tần suất xuất hiện
 	FrequencyTable freqTab;
@@ -68,11 +70,16 @@ int HuffmanCompress::compressFile(std::string shortLink)
 bool HuffmanCompress::compress()
 {
 	std::vector<std::string> shortLinkFiles = Directory::getLinkFiles(_dirIn);
+
+	_fileCompress.write(uint32_t(MAGIC_NUMBER));
+
 	for (size_t i = 0; i < shortLinkFiles.size(); i++)
 	{
 		if (compressFile(shortLinkFiles[i]) == 0) //fail
 			return 0;
 	}
+
+	//encode xong tính crc, seek lại đầu file và ghi 
 
 	return 1;
 }
