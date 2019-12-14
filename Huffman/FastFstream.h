@@ -1,3 +1,12 @@
+﻿/********************************************************
+* Author: Nguyễn Đức Minh Trí							*
+* Function: Làm thao tác get kí tự từ file nhanh hơn    *
+* vì sử dụng buffer, không phải đọc hay ghi 1 kí tự     *
+* riêng lẻ                                              *
+* Date: 11/12/2019										*
+********************************************************/
+
+
 #pragma once
 #include <fstream>
 
@@ -17,6 +26,8 @@ public:
 	~f_ifstream();
 
 	int get();
+
+	//get 1 line, trả về 1 string, chức năng tương tự std::getline
 	std::string  getline(const char delim = '\n');
 	void clear();
 	void seek(std::streamoff off = 0);

@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿/***********************************************************
+* Author: Nguyễn Đức Minh Trí							   *
+* Function: Xử lý các thao tác liên quan đến folder/file   *
+* Date: 10/12/2019										   *
+***********************************************************/
+
+#pragma once
 #include <cstring>
 #include <io.h>
 #include <iostream>
@@ -28,8 +34,7 @@ public:
 	static uint64_t getFolderSize(std::string linkFolder);
 
 private:
+	//hàm dùng cho đệ quy hỗ trợ getLinkFile
 	static void list(const char* dir, std::string currentLink, std::vector<std::string>& linkFiles);
-
-	
 };
 

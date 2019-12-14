@@ -6,6 +6,7 @@
 #include <ctime>
 #include <string>
 #include "MyUltility.h"
+
 using namespace std;
 
 int main()
@@ -68,7 +69,7 @@ int main()
 					cout << "Giai nen khong thanh cong.\n";
 			}
 
-			cout << "Time: " << double(clock() - start) / CLOCKS_PER_SEC << " (s).";
+			cout << "Time: " << double(clock() - start) / CLOCKS_PER_SEC << " (s).\n";
 		}
 		else
 			cout << "Sai cu phap\n";
