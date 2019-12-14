@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/********************************************************
+* Author: Nguyễn Đức Minh Trí							*
+* Function: Thao tác với huffman tree                   *
+* Date: 22/11/2019										*
+********************************************************/
+
+
+#pragma once
 #include <iostream>
 #include <vector>
 #include "Node.h"

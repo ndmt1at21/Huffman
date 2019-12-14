@@ -1,3 +1,9 @@
+﻿/********************************************************
+* Author: Nguyễn Đức Minh Trí							*
+* Function: thao tác nén file chính                     *
+* Date: 12/11/2019										*
+********************************************************/
+
 #pragma once
 #include "HuffmanCoder.h"
 #include "CodeTree.h"
@@ -18,8 +24,11 @@ public:
 	HuffmanCompress(std::string dirIn, std::string linkFileCompress);
 	~HuffmanCompress();
 
-	//1 th�nh c�ng, 0 kh�ng th�nh c�ng
+	//nén 1 file
 	int compressFile(std::string shortLink);
+
+	//nén folder
+	//return: 1 thành công, 0 không thành công
 	bool compress();
 };
 

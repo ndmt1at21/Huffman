@@ -1,3 +1,9 @@
+﻿/********************************************************
+* Author: Nguyễn Đức Minh Trí							*
+* Function: thao tác giải nén file                      *
+* Date: 12/11/2019										*
+********************************************************/
+
 #pragma once
 #include <string>
 #include "CodeTree.h"
@@ -17,7 +23,11 @@ public:
 	HuffmanDecompress(std::string linkFileDecompress, std::string dirOut);
 	~HuffmanDecompress();
 
+	//giải nén 1 file
 	int decompressFile();
+
+	//giải nén folder lẫn file
+	//return 1: thành công, 0: thất bại
 	bool decompress();
 };
 

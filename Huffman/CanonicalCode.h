@@ -1,4 +1,12 @@
-﻿#pragma once
+﻿/**************************************************************
+* Author: Nguyễn Đức Minh Trí							      *
+* Function: Chuyển từ bảng codelen về cây (dạng canonical)    *
+* Canonical code len giúp chuyển từ code len về cây huffman   *
+* mà không cần lưu cả cây                                     *
+* Date: 05/12/2019									      	  *
+**************************************************************/
+
+#pragma once
 #include <iostream>
 #include <vector>
 #include "CodeTree.h"
