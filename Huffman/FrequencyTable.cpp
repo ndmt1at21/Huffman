@@ -31,6 +31,14 @@ CodeTree FrequencyTable::buildHuffTree() const
 		if (_freqs[i] > 0)
 			priQueue.push(NodeWithFreq(new Leaf(i), i, _freqs[i]));
 
+	//xử lí cây trống
+	uint32_t i = 0;
+	while (priQueue.size() < 2)
+	{
+		priQueue.push(NodeWithFreq(new Leaf(i), i, 0));
+		i++;
+	}
+
 	//tạo cây
 	while (priQueue.size() > 1)
 	{

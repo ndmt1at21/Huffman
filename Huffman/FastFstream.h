@@ -11,7 +11,7 @@
 #include <fstream>
 
 #define SIZE_READ 1024*1024*16
-#define SIZE_WRITE 1024*16
+#define SIZE_WRITE 1024*1024*16
 
 class f_ifstream
 {

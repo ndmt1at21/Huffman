@@ -18,7 +18,7 @@ int main()
 		string express;
 		getline(cin, express, '\n');
 
-		erase_space(express);
+		normalize(express);
 
 		if (express.length() == 0)
 			continue;

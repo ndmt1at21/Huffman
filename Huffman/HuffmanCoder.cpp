@@ -34,16 +34,15 @@ int HuffDecoder::symDec(CodeTree& codeTree)
 		if (tmp == 0)
 			nextNode = currentNode->_lchild.get();
 		//đi qua bên trái
-		else if (tmp == 1)
+		else 
 			nextNode = currentNode->_rchild.get();
-		else
-			throw std::logic_error("bit chi co 2 gia tri 0 va 1");
 
 		//nếu chạm đến là thì trả về ký tự 
-		if (dynamic_cast<const Leaf*>(nextNode) != NULL)
-			return (dynamic_cast<const Leaf*>(nextNode)->_symbol);
+		const Leaf* leaf = dynamic_cast<const Leaf*>(nextNode);
+		if ( leaf != NULL)
+			return (leaf->_symbol);
+
 		//nếu là node lá thì gán node hiện tại bằng node tìm đc bên trên
-		else if (dynamic_cast<const Internal*>(nextNode) != NULL)
-			currentNode = dynamic_cast<const Internal*>(nextNode);
+		currentNode = dynamic_cast<const Internal*>(nextNode);
 	}
 }

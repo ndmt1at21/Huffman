@@ -1,5 +1,13 @@
 #include "MyUltility.h"
 
+void normalize(std::string& link)
+{
+	erase_space(link);
+	for (size_t i = 0; i < link.length(); i++)
+		if (link[i] == '\\')
+			link[i] = '/';
+}
+
 void erase_space(std::string& str)
 {
 	str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
